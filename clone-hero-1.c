@@ -8,20 +8,7 @@
 #include "class/hid/hid.h"
 #include "device/usbd.h"   
 #include "tusb_config.h"
-
-#define GREEN_KEY 13
-#define RED_KEY 14
-#define YELLOW_KEY 15
-#define BLUE_KEY 11
-#define ORANGE_KEY 12
-
-// strum bar definitions
-#define S_UP 10
-#define S_DOWN 18
-
-#define STARPOWER 16
-#define SELECT
-#define OPTIONS
+#include "controller_gpio.h"
 
 int keys[] = {GREEN_KEY, RED_KEY, YELLOW_KEY, BLUE_KEY, ORANGE_KEY};
 int strum[] = {S_UP};
@@ -63,6 +50,10 @@ bool up_pressed_last = false;
 
 //special key bools
 bool starpower_pressed_last = false;
+
+void update_led_states(void){
+
+}
 
 int main() {
   board_init();
