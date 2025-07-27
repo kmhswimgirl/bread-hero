@@ -51,17 +51,17 @@ void init_function_keys(void){
   }
 }
 
-// fret booleans
+// fret bools
 bool green_pressed_last = false;
 bool red_pressed_last = false;
 bool yellow_pressed_last = false;
 bool blue_pressed_last = false;
 bool orange_pressed_last = false;
 
-//strumbar booleans
+//strumbar bools
 bool up_pressed_last = false;
 
-//special key booleans
+//special key bools
 bool starpower_pressed_last = false;
 
 int main() {
@@ -69,7 +69,7 @@ int main() {
   tusb_init();
   init_fretboard();
   init_strumbar();
-  init_function_keys;
+  init_function_keys();
 
   while (true) {
     tud_task(); // TinyUSB device task
@@ -86,32 +86,29 @@ int main() {
     bool starpower_pressed = !gpio_get(function[0]);
 
     if(tud_hid_ready()){ //make sure mc is ready 
-  
-      uint8_t keycode[6] = {0}; //wipe array
-      uint8_t key_count = 0;
       
-      if (green_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_A;
-      }
-      if (red_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_S;
-      }
-      if (yellow_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_D;
-      }
-      if (blue_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_F;  
-      }
-      if (orange_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_G;  
-      }
-      if (up_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_ARROW_UP;  
-      }
-      if (starpower_pressed && key_count < 6) {
-        keycode[key_count++] = HID_KEY_H;  
-      }
-      tud_hid_keyboard_report(0, 0, keycode);
+      // gamepad report instead of keyboard one
+      hid_gamepad_report_t gamepad_report = {
+        .x   = 0,   .y   = 0,   .z   = 0,    //analog (whammy bar...)
+        .rz  = 0,   .rx  = 0,   .ry  = 0,    //
+        .hat = 0,                            //
+        .buttons = 0                         // buttons
+      };
+      
+      // convert button pressed bool to gamepad (bit positions)
+      if (green_pressed)    gamepad_report.buttons |= (1 << 0);
+      if (red_pressed)      gamepad_report.buttons |= (1 << 1);
+      if (yellow_pressed)   gamepad_report.buttons |= (1 << 2);
+      if (blue_pressed)     gamepad_report.buttons |= (1 << 3);
+      if (orange_pressed)   gamepad_report.buttons |= (1 << 4);
+
+      if (up_pressed)       gamepad_report.buttons |= (1 << 5);
+      if (starpower_pressed) gamepad_report.buttons |= (1 << 6); 
+      
+      // gamepad report
+      tud_hid_gamepad_report(0, gamepad_report.x, gamepad_report.y, gamepad_report.z, 
+                            gamepad_report.rz, gamepad_report.rx, gamepad_report.ry, 
+                            gamepad_report.hat, gamepad_report.buttons);
     }
 
     green_pressed_last = green_pressed;
