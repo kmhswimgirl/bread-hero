@@ -23,7 +23,7 @@ if (EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
 # ====================================================================================
-set(PICO_BOARD pico_w CACHE STRING "Board type")
+set(PICO_BOARD pico_w CACHE STRING "Board type") # Change from pico_w to pico
 
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
@@ -47,12 +47,15 @@ pico_set_program_version(clone-hero-1 "0.1")
 # pico_generate_pio_header(clone-hero-1 ${CMAKE_CURRENT_LIST_DIR}/blink.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(clone-hero-1 0)
-pico_enable_stdio_usb(clone-hero-1 1)
+pico_enable_stdio_uart(clone-hero-1 1)
+pico_enable_stdio_usb(clone-hero-1 0)
 
 # Add the standard library to the build
 target_link_libraries(clone-hero-1
-        pico_stdlib tinyusb_device tinyusb_board)
+    pico_stdlib
+    tinyusb_device
+    tinyusb_board
+)
 
 # Add the standard include files to the build
 target_include_directories(clone-hero-1 PRIVATE
@@ -66,8 +69,6 @@ include_directories(${CMAKE_SOURCE_DIR}/pico-sdk/src/rp2_common/tinyusb/include)
 target_link_libraries(clone-hero-1 
         hardware_i2c
         hardware_pio
-        hardware_gpio
         )
 
 pico_add_extra_outputs(clone-hero-1)
-
