@@ -70,9 +70,9 @@ void init_serial_string(void) {
 // Update the string array
 char const* string_desc_arr [] = {
   (const char[]) { 0x09, 0x04 }, // 0: is supported language is English (0x0409)
-  "Clone Hero",                  // 1: Manufacturer
-  "Kylie's Guitar Controller",   // 2: Product
-  serial_string,                 // 3: Use the generated serial
+  "kymadogg",                  // 1: Manufacturer
+  "bread",                     // 2: Product
+  serial_string,               // 3: Use the generated serial
 };
 
 uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid) {
