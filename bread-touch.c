@@ -2,7 +2,7 @@
 #include "hardware/timer.h"
 #include "pico/stdlib.h"
 
-#define TOUCH_THRESHOLD 100  // test and adjust
+#define TOUCH_THRESHOLD 500  // test and adjust
 
 uint32_t read_touch_raw(uint8_t pin) { //returns raw touch value / timing
 
@@ -11,7 +11,7 @@ uint32_t read_touch_raw(uint8_t pin) { //returns raw touch value / timing
     sleep_ms(1);
 
     gpio_set_dir(pin, GPIO_IN);
-    gpio_pull_up(pin); // Enable internal pull-up
+    gpio_pull_up(pin); //internal pull-up
 
     uint32_t count = 0;
     while (!gpio_get(pin) && count < 10000) {
@@ -22,5 +22,5 @@ uint32_t read_touch_raw(uint8_t pin) { //returns raw touch value / timing
 
 bool is_touched(uint8_t pin) { //logic for if it has been touched
     uint32_t touch_value = read_touch_raw(pin);
-    return touch_value < TOUCH_THRESHOLD;
+    return touch_value > TOUCH_THRESHOLD;
 }

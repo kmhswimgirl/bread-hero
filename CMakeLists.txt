@@ -69,6 +69,7 @@ include_directories(${CMAKE_SOURCE_DIR}/pico-sdk/src/rp2_common/tinyusb/include)
 target_link_libraries(clone-hero-1 
         hardware_i2c
         hardware_pio
+        hardware_gpio
         )
 
 pico_add_extra_outputs(clone-hero-1)
