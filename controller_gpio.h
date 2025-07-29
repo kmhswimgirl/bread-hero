@@ -2,6 +2,10 @@
 #define CONTROLLER_GPIO
 #include <stdio.h>
 
-#define BREAD_TEST 2
-#define LED 17
+#define GREEN_BREAD 18
+#define RED_BREAD 19
+#define YELLOW_BREAD 17
+
+#define STARPOWER_BREAD 
+
 #endif
