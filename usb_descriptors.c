@@ -67,12 +67,11 @@ void init_serial_string(void) {
            board_id.id[4], board_id.id[5], board_id.id[6], board_id.id[7]);
 }
 
-// Update the string array
 char const* string_desc_arr [] = {
   (const char[]) { 0x09, 0x04 }, // 0: is supported language is English (0x0409)
-  "Clone Hero",                  // 1: Manufacturer
-  "Kylie's Guitar Controller",   // 2: Product
-  serial_string,                 // 3: Use the generated serial
+  "kymadogg",                  // 1: Manufacturer
+  "The Bread-tar",             // 2: Product
+  serial_string,               // 3: Use the generated serial
 };
 
 uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid) {

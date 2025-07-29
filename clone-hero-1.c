@@ -9,10 +9,14 @@
 #include "device/usbd.h"   
 #include "tusb_config.h"
 #include "controller_gpio.h"
+#include "bread-touch.c"
+
+#define TEST_LED 20
 
 int keys[] = {GREEN_KEY, RED_KEY, YELLOW_KEY, BLUE_KEY, ORANGE_KEY};
 int strum[] = {S_UP};
 int function[] = {STARPOWER};
+
 
 void init_fretboard(void){
   for(int i=0; i<5; i++){
@@ -38,7 +42,13 @@ void init_function_keys(void){
   }
 }
 
-// fret bools
+void init_bread_keys(void){
+  for(int i=0;i<2;i++){
+    
+  }
+}
+
+// normal fret bools
 bool green_pressed_last = false;
 bool red_pressed_last = false;
 bool yellow_pressed_last = false;
@@ -51,8 +61,16 @@ bool up_pressed_last = false;
 //special key bools
 bool starpower_pressed_last = false;
 
-void update_led_states(void){
+//touch bread bools
+bool green_bread_touch = false;
+bool red_bread_touch = false;
+bool yellow_bread_touch = false;
 
+void test_bread_sensor(void){
+  if(green_bread_touch){
+    
+
+  }
 }
 
 int main() {
@@ -81,8 +99,8 @@ int main() {
       // gamepad report instead of keyboard one
       hid_gamepad_report_t gamepad_report = {
         .x   = 0,   .y   = 0,   .z   = 0,    //analog (whammy bar...)
-        .rz  = 0,   .rx  = 0,   .ry  = 0,    //
-        .hat = 0,                            //
+        .rz  = 0,   .rx  = 0,   .ry  = 0,    
+        .hat = 0,                            
         .buttons = 0                         // buttons
       };
       
